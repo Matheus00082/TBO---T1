@@ -31,3 +31,18 @@ tAresta *aresta(int idxPonto1, int idxPonto2, double peso) {
 }
 
 void destruirAresta(tAresta *a) { free(a); }
+
+int comparaAresta(void *arestaA, void *arestaB) {
+  double pesoA = ((tAresta *)arestaA)->peso;
+  double pesoB = ((tAresta *)arestaB)->peso;
+
+  if (pesoA < pesoB) {
+    return -1;
+  }
+
+  if (pesoA > pesoB) {
+    return 1;
+  }
+
+  return 0;
+}
