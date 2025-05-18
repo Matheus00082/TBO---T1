@@ -1,0 +1,13 @@
+OBJETIVO: Implementar um algoritmo de agrupamento. Mais especificamente, agrupamento de pontos no espaço n dimensional em k grupos. A similaridade e dissimilaridade vai ser a distância euclidina entre os pontos. Além disso, a distância entre pontos de diferentes grupos deve ser maximizada (agrupamento de espaçamento máximo).
+
+Implementação do algoritmo para encontrar o agrupamento de espaçamento máximo:
+    1: Calcular as distâncias euclidianas entre todos os pares de pontos e salvar em uma matriz.
+    2: Transformar a matriz em uma lista de arestas.
+    3: Aplicar o algoritmo de Kruskal.
+        3.1: Ordenar a lista de arestas em ordem crescente.
+        3.2: Adicionar as arestas na MST (union-find).
+    4: Remover k-1 arestas de maior peso da lista.
+
+Após implementar o algoritmo:
+    1: Criar um arquivo para gerar a saída.
+    2: Cada linha do arquivo terá um grupo resultante e os elementos do grupo estarão em ordem alfabética.
