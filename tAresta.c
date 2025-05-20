@@ -22,6 +22,13 @@ tAresta **arestas(tPonto **pontos, int qtdPontos, int qtdCoord) {
   return arestas;
 }
 
+void destruirArestas(tAresta **arestas, int qtdArestas) {
+  for (int i = 0; i < qtdArestas; i++) {
+    destruirAresta(arestas[i]);
+  }
+  free(arestas);
+}
+
 tAresta *aresta(int idxPonto1, int idxPonto2, double peso) {
   tAresta *a = (tAresta *)calloc(1, sizeof(tAresta));
   a->idxPonto1 = idxPonto1;
@@ -32,9 +39,9 @@ tAresta *aresta(int idxPonto1, int idxPonto2, double peso) {
 
 void destruirAresta(tAresta *a) { free(a); }
 
-int comparaAresta(void *arestaA, void *arestaB) {
-  double pesoA = ((tAresta *)arestaA)->peso;
-  double pesoB = ((tAresta *)arestaB)->peso;
+int comparaAresta(const void *arestaA, const void *arestaB) {
+  double pesoA = (*(const tAresta **)arestaA)->peso;
+  double pesoB = (*(const tAresta **)arestaB)->peso;
 
   if (pesoA < pesoB) {
     return -1;
@@ -46,3 +53,9 @@ int comparaAresta(void *arestaA, void *arestaB) {
 
   return 0;
 }
+
+int retornaIdxPonto1(tAresta *a) { return a->idxPonto1; }
+
+int retornaIdxPonto2(tAresta *a) { return a->idxPonto2; }
+
+double retornaPeso(tAresta *a) { return a->peso; }

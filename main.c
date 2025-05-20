@@ -2,22 +2,63 @@
 #include "tPonto.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main(void) {
+int main(int argc, char const *argv[]) {
 
-  tPonto **pontos = (tPonto **)calloc(2, sizeof(tPonto *));
-  double coord1[] = {0, 0};
-  double coord2[] = {3, 4};
-  double coord3[] = {6, 8};
-  double coord4[] = {9, 12};
-  double coord5[] = {12, 16};
-  pontos[0] = ponto("A", coord1, 2);
-  pontos[1] = ponto("B", coord2, 2);
-  pontos[2] = ponto("C", coord3, 2);
-  pontos[3] = ponto("D", coord4, 2);
-  pontos[4] = ponto("E", coord5, 2);
+  int tamanhoAlocado = 100, qtdPontos = 0, qtdCoordAlocadas = 2, qtdCoord = 0;
+  tPonto **pontos = (tPonto **)calloc(tamanhoAlocado, sizeof(tPonto *));
 
-  for (int i = 0; i < 5; i++) {
+  // abrir arquivo argv[n]
+  char nomeArquivo[100] = "1.txt";
+  FILE *arquivo = fopen(nomeArquivo, "r");
+
+  char linha[1000];
+  while (fgets(linha, sizeof(linha), arquivo)) {
+    char *token = strtok(linha, ",");
+    qtdCoord = 0;
+
+    // criar ponto
+    char *nome = token;
+    token = strtok(NULL, ",");
+
+    double *coordenadas = (double *)calloc(qtdCoordAlocadas, sizeof(double));
+
+    while (token != NULL) {
+      if (qtdCoord >= qtdCoordAlocadas) {
+        qtdCoordAlocadas *= 2;
+        coordenadas =
+            (double *)realloc(coordenadas, qtdCoordAlocadas * sizeof(double));
+      }
+
+      coordenadas[qtdCoord++] = atof(token);
+      token = strtok(NULL, ",");
+    }
+
+    pontos[qtdPontos++] = ponto(nome, coordenadas, qtdCoord);
+    free(coordenadas);
+
+    if (qtdPontos >= tamanhoAlocado) {
+      tamanhoAlocado *= 2;
+      pontos = (tPonto **)realloc(pontos, tamanhoAlocado * sizeof(tPonto *));
+    }
+  }
+
+  fclose(arquivo);
+
+  int qtdArestas = qtdPontos * (qtdPontos - 1) / 2;
+  tAresta **a = arestas(pontos, qtdPontos, qtdCoord);
+
+  qsort(a, qtdArestas, sizeof(tAresta *), comparaAresta);
+
+  for (int i = 0; i < qtdArestas; i++) {
+    printf("Aresta %d de peso %lf: %d - %d\n", i, retornaPeso(a[i]),
+           retornaIdxPonto1(a[i]), retornaIdxPonto2(a[i]));
+  }
+
+  destruirArestas(a, qtdArestas);
+
+  for (int i = 0; i < qtdPontos; i++) {
     destruirPonto(pontos[i]);
   }
 

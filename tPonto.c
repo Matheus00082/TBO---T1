@@ -12,6 +12,7 @@ typedef struct tPonto {
 tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
 
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
+
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
   strcpy(p->nome, nome);
 
@@ -25,6 +26,10 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
 }
 
 void destruirPonto(tPonto *p) {
+  if (p == NULL)
+    return;
+
+  // printf("Destruindo ponto %s\n", p->nome);
   free(p->nome);
   free(p->coordenadas);
   free(p);
