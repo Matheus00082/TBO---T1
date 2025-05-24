@@ -1,0 +1,58 @@
+﻿1. Leitura de Entrada
+* Abrir arquivo de entrada.
+* Para cada linha:
+   * Ler identificador e coordenadas.
+   * Armazenar os pontos em uma struct: typedef struct { char *id; double *coords; } Ponto.
+2. Cálculo de Distâncias
+* Criar lista de arestas:
+   * Para cada par de pontos i < j:
+      * Calcular a distância Euclidiana.
+      * Armazenar em Aresta { int u, v; double dist; }.
+3. MST com Kruskal
+* Ordenar arestas por distância com qsort.
+* Usar Union-Find para construir a MST:
+   * Adicionar arestas ao MST enquanto não formar ciclo (union-find).
+   * Armazenar todas as arestas da MST. COMO FAZER O UNION FIND? TROCAR PRA LISTA?
+4. Remoção das k - 1 maiores arestas
+* Ordenar as arestas da MST decrescentemente.
+* Remover as k-1 maiores.
+* Isso cria k componentes conexas.
+5. Agrupamento e Saída
+* Atribuir os pontos a seus grupos com Union-Find.
+* Mapear cada grupo para seu conjunto de identificadores.
+* Ordenar identificadores de cada grupo e os grupos em si.
+* Escrever no arquivo de saída.
+
+6. Extras obrigatórios
+   * Makefile que compila para ./trab1.
+   * Sem prints ou entradas no console.
+   * Liberação de memória ao final.
+   * Testar com valgrind.
+
+
+
+
+Ler a entrada:
+   * Abrir o arquivo de entrada;
+   * Armazenar os pontos e identificadores únicos (strings + coordenadas);
+   * Armazenar número de pontos n e dimensão m.
+Calcular distâncias euclidianas entre todos os pares:
+   * Gerar uma lista de arestas: [(distância, índice_i, índice_j)];
+   * Usar fórmula da distância euclidiana.
+Ordenar a lista de arestas:
+   * Usar qsort() com comparação baseada na distância.
+Construir a MST com Kruskal:
+   * Usar estrutura Union-Find (com path compression e union by rank);
+   * Iterar sobre as arestas ordenadas e selecionar as que não criam ciclos;
+   * MST terá n-1 arestas.
+Remover as k - 1 arestas de maior peso da MST:
+   * Ordenar as arestas da MST por peso decrescente;
+   * Remover as k - 1 maiores.
+Formar os grupos com Union-Find reverso:
+   * Reconstruir as conexões a partir da MST sem as k-1 maiores arestas;
+   * Cada conjunto disjunto será um grupo.
+Ordenar cada grupo lexicograficamente;
+Ordenar os grupos pelo primeiro elemento lexicográfico;
+Gravar a saída em arquivo de acordo com o formato:
+   * Uma linha por grupo;
+   * Elementos separados por vírgula.

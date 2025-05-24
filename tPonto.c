@@ -9,7 +9,8 @@ typedef struct tPonto {
   double *coordenadas;
 } tPonto;
 
-tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
+tPonto *ponto(char *nome, double *coordenadas, int qtdCoord,
+              int posicaoNoVetor) {
 
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
 
@@ -29,7 +30,6 @@ void destruirPonto(tPonto *p) {
   if (p == NULL)
     return;
 
-  // printf("Destruindo ponto %s\n", p->nome);
   free(p->nome);
   free(p->coordenadas);
   free(p);

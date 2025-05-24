@@ -3,7 +3,8 @@
 
 typedef struct tPonto tPonto;
 
-tPonto *ponto(char *nome, double *coordenadas, int qtdCoord);
+tPonto *ponto(char *nome, double *coordenadas, int qtdCoord,
+              int posicaoNoVetor);
 void destruirPonto(tPonto *p);
 char *nomePonto(tPonto *p);
 double *coordenadasPonto(tPonto *p);

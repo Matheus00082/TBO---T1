@@ -1,5 +1,6 @@
 #include "tAresta.h"
 #include "tPonto.h"
+#include "unionFind.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +36,9 @@ int main(int argc, char const *argv[]) {
       token = strtok(NULL, ",");
     }
 
-    pontos[qtdPontos++] = ponto(nome, coordenadas, qtdCoord);
+    pontos[qtdPontos] = ponto(nome, coordenadas, qtdCoord, qtdPontos);
+    qtdPontos++;
+
     free(coordenadas);
 
     if (qtdPontos >= tamanhoAlocado) {
@@ -51,11 +54,31 @@ int main(int argc, char const *argv[]) {
 
   qsort(a, qtdArestas, sizeof(tAresta *), comparaAresta);
 
-  for (int i = 0; i < qtdArestas; i++) {
-    printf("Aresta %d de peso %lf: %d - %d\n", i, retornaPeso(a[i]),
-           retornaIdxPonto1(a[i]), retornaIdxPonto2(a[i]));
+  int pontosConectados = 0, arestasPercorridas = 0,
+      *vetorMapa = iniciarVetorMapa(qtdPontos);
+  double custoTotal = 0.00;
+
+  for (int i = 0; i < qtdArestas && pontosConectados < qtdPontos - 1; i++) {
+    int idxPonto1 = retornaIdxPonto1(a[arestasPercorridas]);
+    int idxPonto2 = retornaIdxPonto2(a[arestasPercorridas]);
+
+    if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
+      uniao(vetorMapa, idxPonto1, idxPonto2, &pontosConectados);
+      custoTotal += retornaPeso(a[arestasPercorridas]);
+      pontosConectados++;
+    }
+
+    arestasPercorridas++;
   }
 
+  printf("Custo total: %.2lf\n", custoTotal);
+  printf("Arestas percorridas: %d\n", arestasPercorridas);
+  printf("Pontos conectados: %d\n", pontosConectados);
+  for (int i = 0; i < qtdPontos; i++) {
+    printf("%d\n", vetorMapa[i]);
+  }
+
+  destruirVetorMapa(vetorMapa);
   destruirArestas(a, qtdArestas);
 
   for (int i = 0; i < qtdPontos; i++) {
