@@ -50,7 +50,9 @@ int main(int argc, char const *argv[]) {
   fclose(arquivo);
 
   int qtdArestas = qtdPontos * (qtdPontos - 1) / 2;
+  int qtdArestasArvore = 0;
   tAresta **a = arestas(pontos, qtdPontos, qtdCoord);
+  tAresta **arestasNaArvore = (tAresta **) calloc(qtdPontos - 1, sizeof(tAresta *));
 
   qsort(a, qtdArestas, sizeof(tAresta *), comparaAresta);
 
@@ -65,11 +67,24 @@ int main(int argc, char const *argv[]) {
     if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
       uniao(vetorMapa, idxPonto1, idxPonto2, &pontosConectados);
       custoTotal += retornaPeso(a[arestasPercorridas]);
-      pontosConectados++;
+      arestasNaArvore[qtdArestasArvore++] = a[arestasPercorridas];
+      pontosConectados++; //look
     }
 
     arestasPercorridas++;
   }
+
+  //apagar mapa? criar novo?
+  //int k = atoi(argv[2]);
+
+  //int arestasFinais = qtdPontos - k;
+
+  for (int i = 0; i < arestasFinais; i++) {
+    int idxPonto1 = retornaIdxPonto1(arestasNaArvore[i]);
+    int idxPonto2 = retorna IdxPonto2(arestasNaArvore[i]);
+    //uniao
+  }
+  
 
   printf("Custo total: %.2lf\n", custoTotal);
   printf("Arestas percorridas: %d\n", arestasPercorridas);
@@ -80,6 +95,7 @@ int main(int argc, char const *argv[]) {
 
   destruirVetorMapa(vetorMapa);
   destruirArestas(a, qtdArestas);
+  free(arestasNaArvore);
 
   for (int i = 0; i < qtdPontos; i++) {
     destruirPonto(pontos[i]);

@@ -24,7 +24,7 @@ void uniao(int *vetorMapa, int idxPonto1, int idxPonto2, int *qtdConexoes) {
   if (raizPonto1 != raizPonto2) {
     vetorMapa[raizPonto2] = raizPonto1;
 
-    printf("Unindo %d e %d\n", raizPonto1, raizPonto2);
+    printf("Unindo %d e %d\n", raizPonto1, raizPonto2); //nao incrementa
   }
 }
 
