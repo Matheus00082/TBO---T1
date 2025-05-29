@@ -14,7 +14,6 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
   strcpy(p->nome, nome);
-
   p->coordenadas = (double *)calloc(qtdCoord, sizeof(double));
 
   for (int i = 0; i < qtdCoord; i++) {
@@ -25,6 +24,8 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
 }
 
 void destruirPonto(tPonto *p) {
+  if (p == NULL) return;
+
   free(p->nome);
   free(p->coordenadas);
   free(p);
