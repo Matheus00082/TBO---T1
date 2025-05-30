@@ -14,7 +14,6 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
   strcpy(p->nome, nome);
-
   p->coordenadas = (double *)calloc(qtdCoord, sizeof(double));
 
   for (int i = 0; i < qtdCoord; i++) {
@@ -25,9 +24,20 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
 }
 
 void destruirPonto(tPonto *p) {
+  if (p == NULL) return;
+
   free(p->nome);
   free(p->coordenadas);
   free(p);
+}
+
+void destruirPontos(Vector *pontos) {
+  int qtdPontos = vector_size(pontos);
+
+  for (int i = 0; i < qtdPontos; i++) {
+    destruirPonto(vector_pop_back(pontos));
+  }
+  vector_destroy(pontos);
 }
 
 char *nomePonto(tPonto *p) { return p->nome; }
@@ -41,5 +51,5 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
     somatorio += pow(p1->coordenadas[i] - p2->coordenadas[i], 2);
   }
 
-  return sqrt(somatorio);
+  return somatorio;
 }

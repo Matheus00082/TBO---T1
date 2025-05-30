@@ -1,8 +1,8 @@
 all:
-	@gcc -o trab1 *.c
+	@gcc -o main *.c -lm
 
 run:
-	@valgrind --leak-check=full ./trab1 entrada.txt 4 saida.txt
+	@valgrind --leak-check=full ./main
 
 clean:
-	@rm -rf trab1
+	@rm -rf main
