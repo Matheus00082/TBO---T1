@@ -7,14 +7,16 @@
 #include <string.h>
 
 tPonto *criarPonto(char *token, int *qtdCoord);
-void gerarMst(Vector *arestas, int qtdPontos, Vector *pontos);
+void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos);
 
 int main(int argc, char const *argv[]) {
   Vector *pontos = vector_construct();
   int qtdCoordAlocadas = 2, qtdCoord = 0;
+  // Receber de argv
+  int kGrupos = 3;
 
   // abrir arquivo argv[n]
-  char nomeArquivo[100] = "1.txt";
+  char nomeArquivo[100] = "2.txt";
   FILE *arquivo = fopen(nomeArquivo, "r");
 
   char *linha = NULL;
@@ -26,12 +28,14 @@ int main(int argc, char const *argv[]) {
   }
 
   fclose(arquivo);
+  free(linha);
 
   int qtdPontos = vector_size(pontos);
   Vector *arestas = criarArestas(pontos, qtdCoord);
   vector_sort(arestas, comparaAresta);
-  gerarMst(arestas, qtdPontos, pontos);
-  vector_destroy(pontos);
+  agrupamentoMaximo(arestas, pontos, kGrupos);
+  destruirPontos(pontos);
+  destruirArestas(arestas);
 
   return 0;
 }
@@ -60,28 +64,29 @@ tPonto *criarPonto(char *token, int *qtdCoord) {
   return pontoAtual;
 }
 
-void gerarMst(Vector *arestas, int qtdPontos, Vector *pontos) {
-  int pontosConectados = 0, arestasPercorridas = 0, *vetorMapa = iniciarVetorMapa(qtdPontos);
-  double custoTotal = 0;
-  int qtdArestas = qtdPontos * (qtdPontos - 1) / 2; // Fórmula para calcular a quantidade de arestas em um grafo completo
+void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
+  int qtdPontos = vector_size(pontos), *vetorMapa = iniciarVetorMapa(qtdPontos), arestasPercorridas = 0;
 
-  for (int i = 0; i < qtdArestas && pontosConectados < qtdPontos - 1; i++) {
-    int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
-    int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
-
-    if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
-      uniao(vetorMapa, idxPonto1, idxPonto2, &pontosConectados);
-      custoTotal += retornaPeso(vector_get(arestas, arestasPercorridas));
-      pontosConectados++;
+  if (kGrupos < qtdPontos) {
+    while (kGrupos - 1) {
+      int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
+      int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
+  
+      if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
+        uniao(vetorMapa, idxPonto1, idxPonto2);
+        tPonto *ponto1 = vector_get(pontos, idxPonto1);
+        tPonto *ponto2 = vector_get(pontos, idxPonto2);
+        printf("CONECTEI OS PONTOS: %s e %s\n", nomePonto(ponto1), nomePonto(ponto2));
+      }
+      else {
+        kGrupos--;
+      }
+      arestasPercorridas++;
     }
-
-    arestasPercorridas++;
   }
 
-  printf("Custo total: %.2lf\n", custoTotal);
-  printf("Arestas percorridas: %d\n", arestasPercorridas);
-  printf("Pontos conectados: %d\n", pontosConectados);
-
+  for (int i = 0; i < qtdPontos; i++) {
+    printf("RAIZ: %d\n", vetorMapa[i]);
+  }
   destruirVetorMapa(vetorMapa);
-  destruirArestas(arestas);
 }

@@ -31,6 +31,15 @@ void destruirPonto(tPonto *p) {
   free(p);
 }
 
+void destruirPontos(Vector *pontos) {
+  int qtdPontos = vector_size(pontos);
+
+  for (int i = 0; i < qtdPontos; i++) {
+    destruirPonto(vector_pop_back(pontos));
+  }
+  vector_destroy(pontos);
+}
+
 char *nomePonto(tPonto *p) { return p->nome; }
 
 double *coordenadasPonto(tPonto *p) { return p->coordenadas; }

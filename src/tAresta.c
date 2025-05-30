@@ -38,8 +38,10 @@ tAresta *criarAresta(int idxPonto1, int idxPonto2, double peso) {
 }
 
 int comparaAresta(const void *arestaA, const void *arestaB) {
-  double pesoA = (*(const tAresta**)arestaA)->peso;
-  double pesoB = (*(const tAresta**)arestaB)->peso;
+  const tAresta *a = *(const tAresta**)arestaA;
+  const tAresta *b = *(const tAresta**)arestaB;
+  double pesoA = a->peso;
+  double pesoB = b->peso;
 
   if (pesoA < pesoB) {
     return -1;

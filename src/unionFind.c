@@ -5,6 +5,7 @@
 
 int *iniciarVetorMapa(int qtdPontos) {
   int *vetorMapa = (int *)calloc(qtdPontos, sizeof(int));
+
   for (int i = 0; i < qtdPontos; i++) {
     vetorMapa[i] = i;
   }
@@ -17,12 +18,17 @@ void destruirVetorMapa(int *vetorMapa) {
   free(vetorMapa);
 }
 
-void uniao(int *vetorMapa, int idxPonto1, int idxPonto2, int *qtdConexoes) {
+void uniao(int *vetorMapa, int idxPonto1, int idxPonto2) {
   int raizPonto1 = encontra(vetorMapa, idxPonto1);
   int raizPonto2 = encontra(vetorMapa, idxPonto2);
 
   if (raizPonto1 != raizPonto2) {
-    vetorMapa[raizPonto2] = raizPonto1;
+    if (idxPonto2 != raizPonto2) {
+      vetorMapa[raizPonto1] = raizPonto2;
+    }
+    else {
+      vetorMapa[raizPonto2] = raizPonto1;
+    }
 
     printf("Unindo %d e %d\n", raizPonto1, raizPonto2);
   }
