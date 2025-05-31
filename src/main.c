@@ -16,7 +16,8 @@ int main(int argc, char const *argv[]) {
   int kGrupos = 3;
 
   // abrir arquivo argv[n]
-  char nomeArquivo[100] = "2.txt";
+  char nomeArquivo[50] = "2.txt";
+
   FILE *arquivo = fopen(nomeArquivo, "r");
 
   char *linha = NULL;
@@ -35,6 +36,7 @@ int main(int argc, char const *argv[]) {
   vector_sort(arestas, comparaAresta);
   agrupamentoMaximo(arestas, pontos, kGrupos);
   destruirPontos(pontos);
+
   destruirArestas(arestas);
 
   return 0;
@@ -65,28 +67,26 @@ tPonto *criarPonto(char *token, int *qtdCoord) {
 }
 
 void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
-  int qtdPontos = vector_size(pontos), *vetorMapa = iniciarVetorMapa(qtdPontos), arestasPercorridas = 0;
+  int qtdPontos = vector_size(pontos), arestasPercorridas = 0, conexoesFeitas = 0;
+  tUnionFind *uf = criarUnionFind(qtdPontos);
 
   if (kGrupos < qtdPontos) {
-    while (kGrupos - 1) {
+    while (conexoesFeitas  < qtdPontos - kGrupos) {
       int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
       int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
   
-      if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
-        uniao(vetorMapa, idxPonto1, idxPonto2);
-        tPonto *ponto1 = vector_get(pontos, idxPonto1);
-        tPonto *ponto2 = vector_get(pontos, idxPonto2);
-        printf("CONECTEI OS PONTOS: %s e %s\n", nomePonto(ponto1), nomePonto(ponto2));
+      if (!verificaSePontosConectados(uf, idxPonto1, idxPonto2)) {
+        uniao(uf, idxPonto1, idxPonto2);
+        conexoesFeitas++;
       }
-      else {
-        kGrupos--;
-      }
+
       arestasPercorridas++;
     }
   }
 
   for (int i = 0; i < qtdPontos; i++) {
-    printf("RAIZ: %d\n", vetorMapa[i]);
+    printf("RAIZ: %d\n", getVetorMapa(uf, i));
   }
-  destruirVetorMapa(vetorMapa);
+  
+  destruirUnionFind(uf);
 }

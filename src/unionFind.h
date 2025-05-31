@@ -1,10 +1,13 @@
 #ifndef UNIONFIND_H
 #define UNIONFIND_H
 
-int *iniciarVetorMapa(int qtdPontos);
-void destruirVetorMapa(int *vetorMapa);
-void uniao(int *vetorMapa, int idxPonto1, int idxPonto2);
-int encontra(int *vetorMapa, int idxPonto);
-int verificaSePontosConectados(int *vetorMapa, int idxPonto1, int idxPonto2);
+typedef struct tUnionFind tUnionFind;
+
+tUnionFind *criarUnionFind(int qtdPontos);
+void destruirUnionFind(tUnionFind *uf);
+void uniao(tUnionFind *uf, int idxPonto1, int idxPonto2);
+int encontra(tUnionFind *uf, int idxPonto);
+int verificaSePontosConectados(tUnionFind *uf, int idxPonto1, int idxPonto2);
+int getVetorMapa(tUnionFind *uf, int i);
 
 #endif

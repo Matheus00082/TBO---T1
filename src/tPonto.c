@@ -51,5 +51,5 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
     somatorio += pow(p1->coordenadas[i] - p2->coordenadas[i], 2);
   }
 
-  return sqrt(somatorio);
+  return somatorio;
 }
