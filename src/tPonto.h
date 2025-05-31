@@ -6,6 +6,7 @@
 typedef struct tPonto tPonto;
 
 tPonto *ponto(char *nome, double *coordenadas, int qtdCoord);
+int comparaPontos(const void *pontoA, const void *pontoB);
 void destruirPonto(tPonto *p);
 void destruirPontos(Vector *p);
 char *nomePonto(tPonto *p);

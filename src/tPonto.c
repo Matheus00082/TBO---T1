@@ -23,6 +23,23 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
   return p;
 }
 
+int comparaPontos(const void *pontoA, const void *pontoB) {
+  const tPonto *a = *(const tPonto**)pontoA;
+  const tPonto *b = *(const tPonto**)pontoB;
+  char *nomePontoA = a->nome;
+  char *nomePontoB = b->nome;
+
+  if (nomePontoA < nomePontoB) {
+    return -1;
+  }
+
+  else if (nomePontoA > nomePontoB) {
+    return 1;
+  }
+
+  return 0;
+}
+
 void destruirPonto(tPonto *p) {
   if (p == NULL) return;
 
