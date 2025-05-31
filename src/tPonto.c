@@ -7,9 +7,10 @@
 typedef struct tPonto {
   char *nome;
   double *coordenadas;
+  int idx;
 } tPonto;
 
-tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
+tPonto *ponto(char *nome, double *coordenadas, int qtdCoord, int idx) {
 
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
@@ -19,6 +20,8 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
   for (int i = 0; i < qtdCoord; i++) {
     p->coordenadas[i] = coordenadas[i];
   }
+
+  p->idx = idx;
 
   return p;
 }
@@ -41,6 +44,8 @@ void destruirPontos(Vector *pontos) {
 }
 
 char *nomePonto(tPonto *p) { return p->nome; }
+
+int getIdxPonto(tPonto* p) { return p->idx; }
 
 double *coordenadasPonto(tPonto *p) { return p->coordenadas; }
 
