@@ -39,32 +39,8 @@ int vector_size(Vector *v) {
     return v->size;
 }
 
-data_type vector_pop_back(Vector *v) {
-    data_type element_back = vector_remove(v, v->size - 1);
-
-    return element_back;
-}
-
 void vector_sort(Vector *v, int (*compare)(const void*, const void*)) {
     qsort(v->data, v->size, sizeof(data_type), compare);
-}
-
-data_type vector_remove(Vector *v, int i) {
-
-    if (i < v->allocated) {
-        data_type element_remove = v->data[i];
-
-        for(; i < v->size - 1; i++) {
-            v->data[i] = v->data[i + 1];
-        }
-        v->size--;
-
-        return element_remove;
-    } else {
-        printf("Indice de remocao invalido\n");
-        exit(1);
-    }
-
 }
 
 void vector_destroy(Vector *v) {

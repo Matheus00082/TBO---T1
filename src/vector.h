@@ -17,12 +17,6 @@ data_type vector_get(Vector *v, int i);
 // Retorna o tamanho do vetor
 int vector_size(Vector *v);
 
-// Remove o i-ésimo elemento do vetor.
-data_type vector_remove(Vector *v, int i); //Receber a função para desalocar o ponteiro removido
-
-// Remove o ultimo elemento
-data_type vector_pop_back(Vector *v); //Receber a função para desalocar o ponteiro removido
-
 // Ordena o vetor in-place (sem criar um novo vetor)
 void vector_sort(Vector *v, int (*compare)(const void*, const void*));
 
