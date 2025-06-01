@@ -59,9 +59,9 @@ Vector *inicializaGrupos(Vector *pontos) {
   int qtdPontos = vector_size(pontos);
   
   for (int i = 0; i < qtdPontos; i++) {
-    List *list = list_construct();
-    list_push_back(list, vector_get(pontos, i));
-    vector_push_back(grupos, list);
+    tLista *lista = list_construct();
+    list_push_back(lista, vector_get(pontos, i));
+    vector_push_back(grupos, lista);
   }
 
   return grupos;

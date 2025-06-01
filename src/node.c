@@ -3,16 +3,16 @@
 #include <stdlib.h>
 #include "node.h"
 
-Node *node_construct(data_type value, Node *prev, Node *next)
+tNode *constroiNo(informacao value, tNode *prev, tNode *next)
 {
-    Node *n = (Node *)malloc(sizeof(Node));
+    tNode *n = (tNode *)calloc(1, sizeof(tNode));
     n->value = value;
     n->next = next;
     n->prev = prev;
     return n;
 }
 
-void node_destroy(Node *n)
+void destroiNo(tNode *n)
 {
     if (n) {
         free(n);

@@ -2,114 +2,107 @@
 #include <stdlib.h>
 #include "list.h"
 
-struct List {
-  Node *head;
-  Node *last;
+struct tLista {
+  tNode *head;
+  tNode *last;
   int size;
 };
 
-List *list_construct() {
-  List *list = (List *)malloc(sizeof(List));
+tLista *tLista_construct() {
+  tLista *lista = (tLista *)malloc(sizeof(tLista));
 
-  list->head = NULL;
-  list->last = NULL;
-  list->size = 0;
+  lista->head = NULL;
+  lista->last = NULL;
+  lista->size = 0;
 
-  return list;
+  return lista;
 }
 
-int list_size(List *l) {
+int tLista_size(tLista *l) {
   return l->size;
 }
 
-void dec_list_size(List *l) {
+void dec_tLista_size(tLista *l) {
   l->size--;
 }
 
-void list_print(List *l, void (*print_fn)(data_type)) {
-  Node *node = l->head;
+void tLista_print(tLista *l, void (*print_fn)(informacao)) {
+  tNode *tNode = l->head;
 
   printf("[");
 
-  while (node != NULL) {
-    print_fn(node->value);
+  while (tNode != NULL) {
+    print_fn(tNode->value);
 
-    if (node->next != NULL) {
+    if (tNode->next != NULL) {
       printf(", ");
     }
-    node = node->next;
+    tNode = tNode->next;
   }
 
   printf("]");
 }
 
-void list_destroy(List *l) {
+void tLista_destroy(tLista *l) {
   if (l) {
     while (l->head != NULL) {
-      Node *node_destruct = l->head;
+      tNode *tNode_destruct = l->head;
       l->head = l->head->next;
-      node_destroy(node_destruct);
+      tNode_destroy(tNode_destruct);
     }
 
     free(l);
   }
 }
 
-void list_push_front(List *l, data_type data) {
-  Node *new_node = node_construct(data, NULL, l->head);
+void tLista_push_front(tLista *l, informacao data) {
+  tNode *new_tNode = tNode_construct(data, NULL, l->head);
 
   if (l->head == NULL) {
-    l->last = l->head = new_node;
+    l->last = l->head = new_tNode;
   }
   else {
-    l->head = l->head->prev = new_node;
+    l->head = l->head->prev = new_tNode;
   }
 
   l->size++;
 }
 
-data_type list_pop_front(List *l) {
-  Node *node_destruct = l->head;
+informacao tLista_pop_front(tLista *l) {
+  tNode *tNode_destruct = l->head;
 
-  if (node_destruct == NULL) {
-    exit(printf("A lista está vazia\n"));
+  if (tNode_destruct == NULL) {
+    exit(printf("A tListaa está vazia\n"));
   }
 
-  data_type data = node_destruct->value;
-  l->head = l->head->next;
+  informacao data = tNode_destruct->value;
+void tLista_iterator_destroy(tIterador *it);
 
-  if (l->head != NULL) {
-    l->head->prev = NULL;
-  }
-  else {
-    l->last = l->head;
-  }
-
-  node_destroy(node_destruct);
+  tNode_destroy(tNode_destruct);
   l->size--;
   return data;
 }
 
-void list_push_back(List *l, data_type data) {
-  Node *new_node = node_construct(data, l->last, NULL);
+void tLista_push_back(tLista *l, informacao data) {
+  tNode *new_tNode = tNode_construct(data, l->last, NULL);
 
   if (l->last == NULL) {
-    l->head = l->last = new_node;
+    l->head = l->last = new_tNode;
   }
   else {
-    l->last = l->last->next = new_node;
+    l->last = l->last->next = new_tNode;
   }
 
   l->size++;
 }
 
-data_type list_pop_back(List *l) {
-  Node *node_destruct = l->last;
+informacao tLista_pop_back(tLista *l) {
+  tNode *tNode_destruct = l->last;
 
   if (l->head == NULL) {
-    exit(printf("A lista está vazia\n"));
+    exit(printf("A tListaa está vazia\n"));
   }
-  data_type data = node_destruct->value;
+  informacao data = tNode_destruct->value;
   l->last = l->last->prev;
 
   if (l->last != NULL) {
@@ -119,26 +112,26 @@ data_type list_pop_back(List *l) {
     l->head = l->last;
   }
 
-  node_destroy(node_destruct);
+  tNode_destroy(tNode_destruct);
   l->size--;
   return data;
 }
 
-Node *list_get_node(List *l, int i) {
+tNode *tLista_get_tNode(tLista *l, int i) {
   if (i < 0 && i < l->size) {
     exit(printf("Índice inválido\n"));
   }
 
-  Node *node = l->head;
+  tNode *tNode = l->head;
 
   for (int idx = 0; idx < i; idx++) {
-    node = node->next;
+    tNode = tNode->next;
   }
 
-  return node;
+  return tNode;
 }
 
-void list_cat(List *l1, List *l2) {
+void tLista_cat(tLista *l1, tLista *l2) {
   if (l2->head == NULL) {
     return;
   }
@@ -159,19 +152,19 @@ void list_cat(List *l1, List *l2) {
   l2->size = 0;
 }
 
-ListIterator *list_front_iterator(List *l) {
-  ListIterator *iterator = (ListIterator *)malloc(sizeof(ListIterator));
+/*tIterador *tLista_front_iterator(tLista *l) {
+  tIterador *iterator = (tIterador *)malloc(sizeof(tIterador));
   iterator->current = l->head;
   return iterator;
 }
 
-ListIterator *list_back_iterator(List *l) {
-  ListIterator *iterator = (ListIterator *)malloc(sizeof(ListIterator));
+tIterador *tLista_back_iterator(tLista *l) {
+  tIterador *iterator = (tIterador *)malloc(sizeof(tIterador));
   iterator->current = l->last;
   return iterator;
 }
 
-bool list_iterator_is_over(ListIterator *it) {
+bool tLista_iterator_is_over(tIterador *it) {
   if (it->current == NULL) {
     return 1;
   }
@@ -179,9 +172,9 @@ bool list_iterator_is_over(ListIterator *it) {
   return 0;
 }
 
-data_type *list_iterator_previous(ListIterator *it) {
-  if (!list_iterator_is_over(it)) {
-    data_type *data = &(it->current->value);
+informacao *tLista_iterator_previous(tIterador *it) {
+  if (!tLista_iterator_is_over(it)) {
+    informacao *data = &(it->current->value);
     it->current = it->current->prev;
     return data;
   }
@@ -189,9 +182,9 @@ data_type *list_iterator_previous(ListIterator *it) {
   return NULL;
 }
 
-data_type *list_iterator_next(ListIterator *it) {
-  if (!list_iterator_is_over(it)) {
-    data_type *data = &(it->current->value);
+informacao *tLista_iterator_next(tIterador *it) {
+  if (!tLista_iterator_is_over(it)) {
+    informacao *data = &(it->current->value);
     it->current = it->current->next;
     return data;
   }
@@ -199,8 +192,8 @@ data_type *list_iterator_next(ListIterator *it) {
   return NULL;
 }
 
-void list_iterator_destroy(ListIterator *it) {
+void tLista_iterator_destroy(tIterador *it) {
   if (it) {
     free(it);
   }
-}
+}*/

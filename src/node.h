@@ -1,16 +1,16 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
-typedef void* data_type;
+typedef void* informacao;
 
-typedef struct Node
+typedef struct tNode
 {
-    data_type value;
-    struct Node *prev;
-    struct Node *next;
-} Node;
+    informacao value;
+    struct tNode *prev;
+    struct tNode *next;
+} tNode;
 
-Node *node_construct(data_type value, Node *prev, Node *next);
-void node_destroy(Node *n);
+tNode *constroiNo(informacao value, tNode *prev, tNode *next);
+void destroiNo(tNode *n);
 
 #endif
