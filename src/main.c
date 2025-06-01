@@ -13,10 +13,11 @@ int main(int argc, char const *argv[]) {
   Vector *pontos = vector_construct();
   int qtdCoordAlocadas = 2, qtdCoord = 0;
   // Receber de argv
-  int kGrupos = 3;
+  int kGrupos = atoi(argv[2]);
 
   // abrir arquivo argv[n]
-  char nomeArquivo[50] = "1.txt";
+  char nomeArquivo[50];
+  strncpy(nomeArquivo, argv[1], sizeof(nomeArquivo));
 
   FILE *arquivo = fopen(nomeArquivo, "r");
 
@@ -30,6 +31,8 @@ int main(int argc, char const *argv[]) {
 
   fclose(arquivo);
   free(linha);
+
+  vector_sort(pontos, comparaPonto);
 
   int qtdPontos = vector_size(pontos);
   Vector *arestas = criarArestas(pontos, qtdCoord);
@@ -70,7 +73,7 @@ void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
   int qtdPontos = vector_size(pontos), *vetorMapa = iniciarVetorMapa(qtdPontos), arestasPercorridas = 0, conexoesFeitas = 0;
 
   if (kGrupos < qtdPontos) {
-    while (conexoesFeitas  < qtdPontos - kGrupos) {
+    while ((conexoesFeitas  < qtdPontos - kGrupos) && (arestasPercorridas < vector_size(arestas))) {
       int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
       int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
   
@@ -84,7 +87,7 @@ void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
   }
 
   for (int i = 0; i < qtdPontos; i++) {
-    printf("RAIZ: %d\n", vetorMapa[i]);
+    printf("PONTO %s NA POSIÇÃO %d COM RAIZ: %d\n", nomePonto((tPonto*)vector_get(pontos, i)), i,vetorMapa[i]);
   }
   destruirVetorMapa(vetorMapa);
 }

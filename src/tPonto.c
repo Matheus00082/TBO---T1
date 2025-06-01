@@ -53,3 +53,10 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
 
   return somatorio;
 }
+
+int comparaPonto(const void *a, const void *b) {
+  tPonto *p1 = *(tPonto **)a;
+  tPonto *p2 = *(tPonto **)b;
+
+  return strcmp(p1->nome, p2->nome);
+}
