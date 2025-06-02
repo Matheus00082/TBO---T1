@@ -65,14 +65,16 @@ informacao removeElementoVector(tVector *v, int i) {
   }
 }
 
-void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao)) {
+void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao, FILE*), FILE *arquivoSaida) {
   int tamanho = v->tamanho;
 
   for (int i = 0; i < tamanho; i++) {
-    funcaoImpressao(v->dados[i]);
+    funcaoImpressao(v->dados[i], arquivoSaida);
 
-    if (i < tamanho - 1) printf(",");
+    if (i < tamanho - 1) fprintf(arquivoSaida, ",");
   }
+
+  fprintf(arquivoSaida, "\n");
 }
 
 void destroiVector(tVector *v) {

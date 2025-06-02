@@ -1,6 +1,5 @@
 #include "unionFind.h"
 #include "tPonto.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct tUnionFind {

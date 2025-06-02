@@ -3,6 +3,7 @@
 
 typedef void* informacao;
 typedef struct tVector tVector;
+#include <stdio.h>
 
 tVector *constroiVector();
 
@@ -18,7 +19,7 @@ informacao removeAtrasVector(tVector *v);
 
 void ordenaVector(tVector *v, int (*compare)(const void *, const void *));
 
-void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao));
+void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao, FILE*), FILE *arquivoSaida);
 
 void destroiVector(tVector *v);
 

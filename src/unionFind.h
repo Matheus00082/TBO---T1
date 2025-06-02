@@ -3,6 +3,7 @@
 
 #include "tVector.h"
 #include "tLista.h"
+#include <stdio.h>
 
 typedef struct tUnionFind tUnionFind;
 

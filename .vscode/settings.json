@@ -4,6 +4,7 @@
         "string": "c",
         "string_view": "c",
         "istream": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "stdio.h": "c"
     }
 }

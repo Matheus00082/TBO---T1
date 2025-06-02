@@ -7,11 +7,10 @@
 int main(int argc, char const *argv[]) {
   tVector *pontos = constroiVector();
   int qtdCoord = 0;
-  // Receber de argv
-  int kGrupos = 3;
+  int kGrupos = atoi(argv[2]);
 
-  // abrir arquivo argv[n]
-  char nomeArquivo[50] = "2.txt";
+  char nomeArquivo[50];
+  strcpy(nomeArquivo, argv[1]);
 
   FILE *arquivo = fopen(nomeArquivo, "r");
 
@@ -29,7 +28,7 @@ int main(int argc, char const *argv[]) {
 
   tVector *arestas = criarArestas(pontos, qtdCoord);
   ordenaVector(arestas, comparaAresta);
-  agrupamentoMaximo(arestas, pontos, kGrupos);
+  agrupamentoMaximo(arestas, pontos, kGrupos, argv[3]);
   destroiPontos(pontos);
   destroiArestas(arestas);
   return 0;

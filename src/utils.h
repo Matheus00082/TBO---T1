@@ -5,7 +5,7 @@
 #include "tLista.h"
 
 tPonto *criarPonto(char *token, int *qtdCoord);
-void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos);
+void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos, const char *nomeArquivoSaida );
 tVector *inicializaGrupos(tVector *pontos);
-void imprimeGrupos(tVector *grupos);
+void imprimeGrupos(tVector *grupos, const char *nomeArquivoSaida);
 void destruirGrupos(tVector *grupos);

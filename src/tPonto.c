@@ -1,6 +1,5 @@
 #include "tPonto.h"
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -71,7 +70,7 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
   return somatorio;
 }
 
-void imprimeNomePonto(void *p) {
+void imprimeNomePonto(void *p, FILE *arquivoSaida) {
   tPonto *ponto = (tPonto *)p;
-  printf("%s", ponto->nome);
+  fprintf(arquivoSaida, "%s", ponto->nome);
 }

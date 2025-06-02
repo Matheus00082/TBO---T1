@@ -27,7 +27,7 @@ tPonto *criarPonto(char *token, int *qtdCoord) {
   return pontoAtual;
 }
 
-void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos) {
+void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos, const char *nomeArquivoSaida) {
   int qtdPontos = tamanhoVector(pontos), arestasPercorridas = 0, conexoesFeitas = 0;
   tUnionFind *uf = criarUnionFind(qtdPontos);
   tVector *grupos = inicializaGrupos(pontos);
@@ -46,7 +46,7 @@ void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos) {
     }
   }
 
-  imprimeGrupos(grupos);
+  imprimeGrupos(grupos, nomeArquivoSaida);
   destruirUnionFind(uf);
   destruirGrupos(grupos);
 }
@@ -64,8 +64,10 @@ tVector *inicializaGrupos(tVector *pontos) {
   return grupos;
 }
 
-void imprimeGrupos(tVector *grupos) {
+void imprimeGrupos(tVector *grupos, const char *nomeArquivoSaida) {
   int qtdPontos = tamanhoVector(grupos);
+
+  FILE *arquivoSaida = fopen(nomeArquivoSaida, "w");
 
   for (int i = 0; i < qtdPontos; i++) {
     tLista *l = getElementoVector(grupos, i);
@@ -73,11 +75,12 @@ void imprimeGrupos(tVector *grupos) {
     if (tamanhoLista(l) > 0) {
       tVector *v = listaParaVector(l);
       ordenaVector(v, comparaPontos);
-      imprimeVector(v, imprimeNomePonto);
-      printf("\n");
+      imprimeVector(v, imprimeNomePonto, arquivoSaida);
       destroiVector(v);
     }
   }
+
+  fclose(arquivoSaida);
 }
 
 void destruirGrupos(tVector *grupos) {

@@ -2,6 +2,7 @@
 #define TPONTO_H
 
 #include "tVector.h"
+#include <stdio.h>
 
 typedef struct tPonto tPonto;
 
@@ -12,6 +13,6 @@ void destroiPontos(tVector *pontos);
 char *nomePonto(tPonto *p);
 double *coordenadasPonto(tPonto *p);
 double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord);
-void imprimeNomePonto(void *p);
+void imprimeNomePonto(void *p, FILE *arquivoSaida);
 
 #endif
