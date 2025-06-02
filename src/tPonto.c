@@ -28,15 +28,7 @@ int comparaPontos(const void *pontoA, const void *pontoB) {
   char *nomePontoA = a->nome;
   char *nomePontoB = b->nome;
 
-  if (nomePontoA < nomePontoB) {
-    return -1;
-  }
-
-  else if (nomePontoA > nomePontoB) {
-    return 1;
-  }
-
-  return 0;
+  return strcmp(nomePontoA, nomePontoB);
 }
 
 void destroiPonto(tPonto *p) {

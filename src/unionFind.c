@@ -52,10 +52,10 @@ void uniao(tUnionFind *uf, int idxPonto1, int idxPonto2, tVector *grupos) {
 }
 
 int encontra(tUnionFind *uf, int idxPonto) {
-  while (idxPonto != uf->vetorMapa[idxPonto]) {
-    idxPonto = uf->vetorMapa[idxPonto];
+  if (idxPonto != uf->vetorMapa[idxPonto]) {
+    uf->vetorMapa[idxPonto] = encontra(uf, uf->vetorMapa[idxPonto]); 
   }
-  return idxPonto;
+  return uf->vetorMapa[idxPonto];
 }
 
 int verificaSePontosConectados(tUnionFind *uf, int idxPonto1, int idxPonto2) {

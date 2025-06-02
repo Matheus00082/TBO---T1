@@ -3,8 +3,14 @@
 #include <string.h>
 #include "tVector.h"
 #include "utils.h"
+#include <time.h>
 
 int main(int argc, char const *argv[]) {
+
+  /*clock_t inicio = clock();
+  clock_t fim;
+  double tempoExecucao;*/
+
   tVector *pontos = constroiVector();
   int qtdCoord = 0;
   int kGrupos = atoi(argv[2]);
@@ -31,5 +37,10 @@ int main(int argc, char const *argv[]) {
   agrupamentoMaximo(arestas, pontos, kGrupos, argv[3]);
   destroiPontos(pontos);
   destroiArestas(arestas);
+
+  /*fim = clock();
+  tempoExecucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  printf("Tempo de execução: %.2f segundos\n", tempoExecucao);*/
+ 
   return 0;
 }

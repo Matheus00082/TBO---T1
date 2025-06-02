@@ -43,15 +43,7 @@ int comparaAresta(const void *arestaA, const void *arestaB) {
   double pesoA = a->peso;
   double pesoB = b->peso;
 
-  if (pesoA < pesoB) {
-    return -1;
-  }
-
-  else if (pesoA > pesoB) {
-    return 1;
-  }
-
-  return 0;
+  return pesoA - pesoB;
 }
 
 int retornaIdxPonto1(tAresta *a) { return a->idxPonto1; }
