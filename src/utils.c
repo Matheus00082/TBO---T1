@@ -38,7 +38,7 @@ void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos) {
       int idxPonto2 = retornaIdxPonto2(getElementoVector(arestas, arestasPercorridas));
   
       if (!verificaSePontosConectados(uf, idxPonto1, idxPonto2)) {
-        uniao(uf, idxPonto1, idxPonto2);
+        uniao(uf, idxPonto1, idxPonto2, grupos);
         conexoesFeitas++;
       }
 
@@ -46,10 +46,7 @@ void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos) {
     }
   }
 
-  for (int i = 0; i < qtdPontos; i++) {
-    printf("RAIZ: %d\n", getVetorMapa(uf, i));
-  }
-
+  imprimeGrupos(grupos);
   destruirUnionFind(uf);
   destruirGrupos(grupos);
 }
@@ -65,6 +62,22 @@ tVector *inicializaGrupos(tVector *pontos) {
   }
 
   return grupos;
+}
+
+void imprimeGrupos(tVector *grupos) {
+  int qtdPontos = tamanhoVector(grupos);
+
+  for (int i = 0; i < qtdPontos; i++) {
+    tLista *l = getElementoVector(grupos, i);
+
+    if (tamanhoLista(l) > 0) {
+      tVector *v = listaParaVector(l);
+      ordenaVector(v, comparaPontos);
+      imprimeVector(v, imprimeNomePonto);
+      printf("\n");
+      destroiVector(v);
+    }
+  }
 }
 
 void destruirGrupos(tVector *grupos) {

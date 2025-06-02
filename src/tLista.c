@@ -53,8 +53,6 @@ void insereAtrasLista(tLista *l, informacao dado) {
 void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao)) {
   tNo *no = l->primeiro;
 
-  printf("[");
-
   while (no != NULL) {
     funcaoImpressao(no->value);
 
@@ -63,8 +61,6 @@ void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao)) {
     }
     no = no->proximo;
   }
-
-  printf("]");
 }
 
 tNo *retornaNo(tLista *l, int i) {
@@ -118,7 +114,25 @@ void concatenaListas(tLista *l1, tLista *l2) {
     l1->tamanho += l2->tamanho;
   }
 
-  l2 = NULL;
+  l2->primeiro = NULL;
+  l2->ultimo = NULL;
+  l2->tamanho = 0;
+}
+
+tVector *listaParaVector(tLista *l) {
+  if (!l || l->tamanho == 0) {
+    return NULL;
+  }
+
+  tVector *v = constroiVector();
+  tNo *atual = l->primeiro;
+
+  for (int i = 0; i < l->tamanho; i++) {
+    insereAtrasVector(v, atual->value);
+    atual = atual->proximo;
+  }
+
+  return v;
 }
 
 void destroiLista(tLista *l) {

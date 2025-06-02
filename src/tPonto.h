@@ -12,5 +12,6 @@ void destroiPontos(tVector *pontos);
 char *nomePonto(tPonto *p);
 double *coordenadasPonto(tPonto *p);
 double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord);
+void imprimeNomePonto(void *p);
 
 #endif

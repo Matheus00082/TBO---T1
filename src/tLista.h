@@ -2,6 +2,7 @@
 #define TLISTA_H
 
 #include "tNo.h"
+#include "tVector.h"
 
 typedef unsigned int bool;
 
@@ -28,6 +29,8 @@ tNo *retornaNo(tLista *l, int i);
 informacao removeUltimoItem(tLista *l);
 
 void concatenaListas(tLista *l1, tLista *l2);
+
+tVector *listaParaVector(tLista *l);
 
 void destroiLista(tLista *l);
 

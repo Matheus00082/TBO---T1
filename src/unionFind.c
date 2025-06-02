@@ -32,20 +32,23 @@ void destruirUnionFind(tUnionFind *uf) {
   }
 }
 
-void uniao(tUnionFind *uf, int idxPonto1, int idxPonto2) {
+void uniao(tUnionFind *uf, int idxPonto1, int idxPonto2, tVector *grupos) {
   int raizPonto1 = encontra(uf, idxPonto1);
   int raizPonto2 = encontra(uf, idxPonto2);
+  tLista *l1 = getElementoVector(grupos, raizPonto1);
+  tLista *l2 = getElementoVector(grupos, raizPonto2);
 
   if (raizPonto1 != raizPonto2) {
     if (uf->tamanhoArvore[raizPonto1] < uf->tamanhoArvore[raizPonto2]) {
       uf->vetorMapa[raizPonto1] = uf->vetorMapa[raizPonto2];
       uf->tamanhoArvore[raizPonto2] += uf->tamanhoArvore[raizPonto1];
+      concatenaListas(l2, l1);
     }
     else {
       uf->vetorMapa[raizPonto2] = uf->vetorMapa[raizPonto1];
       uf->tamanhoArvore[raizPonto1] += uf->tamanhoArvore[raizPonto2];
+      concatenaListas(l1, l2);
     }
-    printf("Unindo %d e %d\n", raizPonto1, raizPonto2);
   }
 }
 

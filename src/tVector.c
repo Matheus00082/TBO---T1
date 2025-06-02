@@ -65,6 +65,16 @@ informacao removeElementoVector(tVector *v, int i) {
   }
 }
 
+void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao)) {
+  int tamanho = v->tamanho;
+
+  for (int i = 0; i < tamanho; i++) {
+    funcaoImpressao(v->dados[i]);
+
+    if (i < tamanho - 1) printf(",");
+  }
+}
+
 void destroiVector(tVector *v) {
   if (v != NULL) {
     if (v->dados != NULL) {

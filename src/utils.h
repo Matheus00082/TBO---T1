@@ -7,4 +7,5 @@
 tPonto *criarPonto(char *token, int *qtdCoord);
 void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos);
 tVector *inicializaGrupos(tVector *pontos);
+void imprimeGrupos(tVector *grupos);
 void destruirGrupos(tVector *grupos);

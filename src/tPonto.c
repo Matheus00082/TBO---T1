@@ -70,3 +70,8 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
 
   return somatorio;
 }
+
+void imprimeNomePonto(void *p) {
+  tPonto *ponto = (tPonto *)p;
+  printf("%s", ponto->nome);
+}

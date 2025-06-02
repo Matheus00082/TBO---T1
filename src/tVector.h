@@ -18,6 +18,8 @@ informacao removeAtrasVector(tVector *v);
 
 void ordenaVector(tVector *v, int (*compare)(const void *, const void *));
 
+void imprimeVector(tVector *v, void (*funcaoImpressao)(informacao));
+
 void destroiVector(tVector *v);
 
 #endif
