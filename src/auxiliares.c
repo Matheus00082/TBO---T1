@@ -51,6 +51,7 @@ void imprimeGrupos(int *vetorMapa, Vector *pontos, int kGrupos, const char *arqu
     for (int i = 0; i < tamanhoMapa; i++)
     {
         
+
     }
     
 

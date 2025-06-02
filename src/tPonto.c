@@ -16,6 +16,7 @@ tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
   strcpy(p->nome, nome);
   p->coordenadas = (double *)calloc(qtdCoord, sizeof(double));
+  p->proximo = NULL;
 
   for (int i = 0; i < qtdCoord; i++) {
     p->coordenadas[i] = coordenadas[i];
@@ -60,4 +61,12 @@ int comparaPonto(const void *a, const void *b) {
   tPonto *p2 = *(tPonto **)b;
 
   return strcmp(p1->nome, p2->nome);
+}
+
+void defineProximo(tPonto *p, tPonto *proximo) {
+  p->proximo = proximo;
+}
+
+tPonto *getProximo(tPonto *p) {
+  return p->proximo;
 }
