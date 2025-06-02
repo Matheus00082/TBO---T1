@@ -40,7 +40,7 @@ int comparaPontos(const void *pontoA, const void *pontoB) {
   return 0;
 }
 
-void destruirPonto(tPonto *p) {
+void destroiPonto(tPonto *p) {
   if (p == NULL) return;
 
   free(p->nome);
@@ -48,13 +48,13 @@ void destruirPonto(tPonto *p) {
   free(p);
 }
 
-void destruirPontos(Vector *pontos) {
-  int qtdPontos = vector_size(pontos);
+void destroiPontos(tVector *pontos) {
+  int qtdPontos = tamanhoVector(pontos);
 
   for (int i = 0; i < qtdPontos; i++) {
-    destruirPonto(vector_pop_back(pontos));
+    destroiPonto(removeAtrasVector(pontos));
   }
-  vector_destroy(pontos);
+  destroiVector(pontos);
 }
 
 char *nomePonto(tPonto *p) { return p->nome; }

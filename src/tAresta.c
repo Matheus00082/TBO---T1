@@ -7,26 +7,26 @@ typedef struct tAresta {
   double peso;
 } tAresta;
 
-Vector *criarArestas(Vector *pontos, int qtdCoord) {
-  int qtdPontos = vector_size(pontos);
-  Vector *arestas = vector_construct();
+tVector *criarArestas(tVector *pontos, int qtdCoord) {
+  int qtdPontos = tamanhoVector(pontos);
+  tVector *arestas = constroiVector();
 
   for (int i = 0; i < qtdPontos; i++) {
     for (int j = i + 1; j < qtdPontos; j++) {
-      vector_push_back(arestas, criarAresta(i, j, distanciaEuclidiana(vector_get(pontos, i), vector_get(pontos, j), qtdCoord)));
+      insereAtrasVector(arestas, criarAresta(i, j, distanciaEuclidiana(getElementoVector(pontos, i), getElementoVector(pontos, j), qtdCoord)));
     }
   }
 
   return arestas;
 }
 
-void destruirArestas(Vector *arestas) {
-  int qtdArestas = vector_size(arestas);
+void destroiArestas(tVector *arestas) {
+  int qtdArestas = tamanhoVector(arestas);
 
   for (int i = 0; i < qtdArestas; i++) {
-    free(vector_pop_back(arestas));
+    free(removeAtrasVector(arestas));
   }
-  vector_destroy(arestas);
+  destroiVector(arestas);
 }
 
 tAresta *criarAresta(int idxPonto1, int idxPonto2, double peso) {

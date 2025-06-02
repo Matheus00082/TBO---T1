@@ -2,12 +2,12 @@
 #define TARESTA_H
 
 #include "tPonto.h"
-#include "vector.h"
+#include "tVector.h"
 
 typedef struct tAresta tAresta;
 
-Vector *criarArestas(Vector *pontos, int qtdCoord);
-void destruirArestas(Vector *arestas);
+tVector *criarArestas(tVector *pontos, int qtdCoord);
+void destroiArestas(tVector *arestas);
 tAresta *criarAresta(int idxPonto1, int idxPonto2, double peso);
 int comparaAresta(const void *arestaA, const void *arestaB);
 int retornaIdxPonto1(tAresta *a);

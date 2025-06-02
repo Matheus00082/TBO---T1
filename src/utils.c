@@ -27,15 +27,15 @@ tPonto *criarPonto(char *token, int *qtdCoord) {
   return pontoAtual;
 }
 
-void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
-  int qtdPontos = vector_size(pontos), arestasPercorridas = 0, conexoesFeitas = 0;
+void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos) {
+  int qtdPontos = tamanhoVector(pontos), arestasPercorridas = 0, conexoesFeitas = 0;
   tUnionFind *uf = criarUnionFind(qtdPontos);
-  Vector *grupos = inicializaGrupos(pontos);
+  tVector *grupos = inicializaGrupos(pontos);
 
   if (kGrupos < qtdPontos) {
     while (conexoesFeitas  < qtdPontos - kGrupos) {
-      int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
-      int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
+      int idxPonto1 = retornaIdxPonto1(getElementoVector(arestas, arestasPercorridas));
+      int idxPonto2 = retornaIdxPonto2(getElementoVector(arestas, arestasPercorridas));
   
       if (!verificaSePontosConectados(uf, idxPonto1, idxPonto2)) {
         uniao(uf, idxPonto1, idxPonto2);
@@ -54,25 +54,25 @@ void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
   destruirGrupos(grupos);
 }
 
-Vector *inicializaGrupos(Vector *pontos) {
-  Vector *grupos = vector_construct();
-  int qtdPontos = vector_size(pontos);
+tVector *inicializaGrupos(tVector *pontos) {
+  tVector *grupos = constroiVector();
+  int qtdPontos = tamanhoVector(pontos);
   
   for (int i = 0; i < qtdPontos; i++) {
-    List *list = list_construct();
-    list_push_back(list, vector_get(pontos, i));
-    vector_push_back(grupos, list);
+    tLista *lista = constroiLista();
+    insereAtrasLista(lista, getElementoVector(pontos, i));
+    insereAtrasVector(grupos, lista);
   }
 
   return grupos;
 }
 
-void destruirGrupos(Vector *grupos) {
-  int qtdGrupos = vector_size(grupos);
+void destruirGrupos(tVector *grupos) {
+  int qtdGrupos = tamanhoVector(grupos);
 
   for (int i = 0; i < qtdGrupos; i++) {
-    list_destroy(vector_get(grupos, i));
+    destroiLista(getElementoVector(grupos, i));
   }
 
-  vector_destroy(grupos);
+  destroiVector(grupos);
 }
