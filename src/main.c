@@ -2,20 +2,16 @@
 #include "tPonto.h"
 #include "unionFind.h"
 #include "vector.h"
+#include "auxiliares.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-tPonto *criarPonto(char *token, int *qtdCoord);
-void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos);
-
 int main(int argc, char const *argv[]) {
   Vector *pontos = vector_construct();
   int qtdCoordAlocadas = 2, qtdCoord = 0;
-  // Receber de argv
   int kGrupos = atoi(argv[2]);
 
-  // abrir arquivo argv[n]
   char nomeArquivo[50];
   strncpy(nomeArquivo, argv[1], sizeof(nomeArquivo));
 
@@ -37,57 +33,11 @@ int main(int argc, char const *argv[]) {
   int qtdPontos = vector_size(pontos);
   Vector *arestas = criarArestas(pontos, qtdCoord);
   vector_sort(arestas, comparaAresta);
-  agrupamentoMaximo(arestas, pontos, kGrupos);
-  destruirPontos(pontos);
 
+  agrupamentoMaximo(arestas, pontos, kGrupos, argv[3]);
+
+  destruirPontos(pontos);
   destruirArestas(arestas);
 
   return 0;
-}
-
-tPonto *criarPonto(char *token, int *qtdCoord) {
-  int qtdCoordAlocadas = 2;
-  *qtdCoord = 0;
-  char *nome = token;
-  token = strtok(NULL, ",");
-
-  double *coordenadas = (double *)calloc(qtdCoordAlocadas, sizeof(double));
-
-  while (token != NULL) {
-    if (*qtdCoord >= qtdCoordAlocadas) {
-      qtdCoordAlocadas *= 2;
-      coordenadas = (double *)realloc(coordenadas, qtdCoordAlocadas * sizeof(double));
-    }
-
-    coordenadas[(*qtdCoord)++] = atof(token);
-    token = strtok(NULL, ",");
-  }
-
-  tPonto *pontoAtual = ponto(nome, coordenadas, *qtdCoord);
-  free(coordenadas);
-
-  return pontoAtual;
-}
-
-void agrupamentoMaximo(Vector *arestas, Vector *pontos, int kGrupos) {
-  int qtdPontos = vector_size(pontos), *vetorMapa = iniciarVetorMapa(qtdPontos), arestasPercorridas = 0, conexoesFeitas = 0;
-
-  if (kGrupos < qtdPontos) {
-    while ((conexoesFeitas  < qtdPontos - kGrupos) && (arestasPercorridas < vector_size(arestas))) {
-      int idxPonto1 = retornaIdxPonto1(vector_get(arestas, arestasPercorridas));
-      int idxPonto2 = retornaIdxPonto2(vector_get(arestas, arestasPercorridas));
-  
-      if (!verificaSePontosConectados(vetorMapa, idxPonto1, idxPonto2)) {
-        uniao(vetorMapa, idxPonto1, idxPonto2);
-        conexoesFeitas++;
-      }
-
-      arestasPercorridas++;
-    }
-  }
-
-  for (int i = 0; i < qtdPontos; i++) {
-    printf("PONTO %s NA POSIÇÃO %d COM RAIZ: %d\n", nomePonto((tPonto*)vector_get(pontos, i)), i,vetorMapa[i]);
-  }
-  destruirVetorMapa(vetorMapa);
 }

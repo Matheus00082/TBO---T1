@@ -7,6 +7,7 @@
 typedef struct tPonto {
   char *nome;
   double *coordenadas;
+  tPonto *proximo;
 } tPonto;
 
 tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {

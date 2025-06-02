@@ -4,6 +4,9 @@
         "string": "c",
         "string_view": "c",
         "istream": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "auxiliares.h": "c",
+        "tponto.h": "c",
+        "unionfind.h": "c"
     }
 }

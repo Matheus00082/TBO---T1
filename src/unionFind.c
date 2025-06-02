@@ -29,8 +29,6 @@ void uniao(int *vetorMapa, int idxPonto1, int idxPonto2) {
     else {
       vetorMapa[raizPonto2] = raizPonto1;
     }
-
-    printf("Unindo %d e %d\n", raizPonto1, raizPonto2);
   }
 }
 
