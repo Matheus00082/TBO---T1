@@ -1,5 +1,5 @@
 all:
-	@gcc -o main *.c -lm
+	@gcc -o main *.c
 
 run:
 	./main 5.txt 10 saida5.txt

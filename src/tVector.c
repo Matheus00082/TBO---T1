@@ -9,11 +9,11 @@ struct tVector {
   int alocado;
 };
 
-tVector *constroiVector() {
+tVector *constroiVector(int qtdElementos) {
   tVector *v = (tVector *)malloc(sizeof(tVector));
-  v->dados = (informacao *)malloc(50 * sizeof(informacao));
+  v->dados = (informacao *)malloc(qtdElementos * sizeof(informacao));
   v->tamanho = 0;
-  v->alocado = 50;
+  v->alocado = qtdElementos;
   return v;
 }
 

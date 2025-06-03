@@ -5,21 +5,18 @@
 #include "utils.h"
 #include <time.h>
 
+#define TAM_MIN 50
+
 int main(int argc, char const *argv[]) {
-
-  /*clock_t inicio = clock();
+  clock_t inicio = clock();
   clock_t fim;
-  double tempoExecucao;*/
+  double tempoExecucao;
 
-  tVector *pontos = constroiVector();
+  tVector *pontos = constroiVector(TAM_MIN);
   int qtdCoord = 0;
   int kGrupos = atoi(argv[2]);
-
-  char nomeArquivo[50];
-  strcpy(nomeArquivo, argv[1]);
-
+  char *nomeArquivo = strdup(argv[1]);
   FILE *arquivo = fopen(nomeArquivo, "r");
-
   char *linha = NULL;
   size_t len = 0;
 
@@ -27,20 +24,20 @@ int main(int argc, char const *argv[]) {
     char *token = strtok(linha, ",");
     insereAtrasVector(pontos, criarPonto(token, &qtdCoord));
   }
-  ordenaVector(pontos, comparaPontos); //ordena apos ler
 
-  fclose(arquivo);
-  free(linha);
-
+  
   tVector *arestas = criarArestas(pontos, qtdCoord);
+  
   ordenaVector(arestas, comparaAresta);
   agrupamentoMaximo(arestas, pontos, kGrupos, argv[3]);
   destroiPontos(pontos);
   destroiArestas(arestas);
-
-  /*fim = clock();
+  free(nomeArquivo);
+  fclose(arquivo);
+  free(linha);
+  
+  fim = clock();
   tempoExecucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-  printf("Tempo de execução: %.2f segundos\n", tempoExecucao);*/
- 
+  printf("Tempo de execução: %.2f segundos\n", tempoExecucao);
   return 0;
 }

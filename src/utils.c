@@ -32,28 +32,26 @@ void agrupamentoMaximo(tVector *arestas, tVector *pontos, int kGrupos, const cha
   tUnionFind *uf = criarUnionFind(qtdPontos);
   tVector *grupos = inicializaGrupos(pontos);
 
-  if (kGrupos < qtdPontos) {
-    while (conexoesFeitas  < qtdPontos - kGrupos) {
-      int idxPonto1 = retornaIdxPonto1(getElementoVector(arestas, arestasPercorridas));
-      int idxPonto2 = retornaIdxPonto2(getElementoVector(arestas, arestasPercorridas));
-  
-      if (!verificaSePontosConectados(uf, idxPonto1, idxPonto2)) {
-        uniao(uf, idxPonto1, idxPonto2, grupos);
-        conexoesFeitas++;
-      }
+  while (conexoesFeitas  < qtdPontos - kGrupos) {
+    int idxPonto1 = retornaIdxPonto1(getElementoVector(arestas, arestasPercorridas));
+    int idxPonto2 = retornaIdxPonto2(getElementoVector(arestas, arestasPercorridas));
 
-      arestasPercorridas++;
+    if (!verificaSePontosConectados(uf, idxPonto1, idxPonto2)) {
+      uniao(uf, idxPonto1, idxPonto2, grupos);
+      conexoesFeitas++;
     }
+
+    arestasPercorridas++;
   }
 
-  imprimeGrupos(grupos, nomeArquivoSaida);
+  imprimeGrupos(grupos, nomeArquivoSaida, kGrupos);
   destruirUnionFind(uf);
   destruirGrupos(grupos);
 }
 
 tVector *inicializaGrupos(tVector *pontos) {
-  tVector *grupos = constroiVector();
   int qtdPontos = tamanhoVector(pontos);
+  tVector *grupos = constroiVector(qtdPontos);
   
   for (int i = 0; i < qtdPontos; i++) {
     tLista *lista = constroiLista();
@@ -74,39 +72,31 @@ int comparaPrimeiroPontoDoGrupo(const void *grupoA_void, const void *grupoB_void
     return comparaPontos(&pontoA_primeiro, &pontoB_primeiro);
 }
 
-void imprimeGrupos(tVector *grupos, const char *nomeArquivoSaida) {
+void imprimeGrupos(tVector *grupos, const char *nomeArquivoSaida, int kGrupos) {
   int qtdGrupos = tamanhoVector(grupos); //qtd grupos nn?
-
-
-  tVector **gruposParaImprimir = (tVector **)calloc(qtdGrupos, sizeof(tVector *));
+  tVector *gruposParaImprimir = constroiVector(kGrupos);
   int grupoIdx = 0;
 
   for (int i = 0; i < qtdGrupos; i++) {
-    tLista *l = (tLista*) getElementoVector(grupos, i);
+    tLista *l = (tLista *) getElementoVector(grupos, i);
 
     if (tamanhoLista(l) > 0) {
       tVector *v = listaParaVector(l);
       ordenaVector(v, comparaPontos);
-      gruposParaImprimir[grupoIdx++] = v;
+      insereAtrasVector(gruposParaImprimir, v);
     }
   }
 
-  if (grupoIdx > 1) { 
-        qsort(gruposParaImprimir, grupoIdx, sizeof(tVector *), comparaPrimeiroPontoDoGrupo);
-  }
-
+  ordenaVector(gruposParaImprimir, comparaPrimeiroPontoDoGrupo);
   FILE *arquivoSaida = fopen(nomeArquivoSaida, "w");
 
-  for(int i = 0; i < grupoIdx; i++) {
-    imprimeVector(gruposParaImprimir[i], imprimeNomePonto, arquivoSaida);
+  for (int i = 0; i < kGrupos; i++) {
+    imprimeVector(getElementoVector(gruposParaImprimir, i), imprimeNomePonto, arquivoSaida);
+    destroiVector(getElementoVector(gruposParaImprimir, i));
   }
 
   fclose(arquivoSaida);
-
-    for(int i = 0; i < grupoIdx; i++) {
-      destroiVector(gruposParaImprimir[i]);
-    }
-    free(gruposParaImprimir);
+  destroiVector(gruposParaImprimir);
 }
 
 void destruirGrupos(tVector *grupos) {

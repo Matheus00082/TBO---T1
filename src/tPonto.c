@@ -1,5 +1,4 @@
 #include "tPonto.h"
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +55,9 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
   double somatorio = 0;
 
   for (int i = 0; i < qtdCoord; i++) {
-    somatorio += pow(p1->coordenadas[i] - p2->coordenadas[i], 2);
+    double coordenada1 = p1->coordenadas[i];
+    double coordenada2 = p2->coordenadas[i];
+    somatorio += (coordenada1 - coordenada2) * (coordenada1 - coordenada2);
   }
 
   return somatorio;

@@ -22,15 +22,19 @@ void insereFrenteLista(tLista *l, informacao dado);
 
 void insereAtrasLista(tLista *l, informacao dado);
 
-void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao));
+void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao, FILE*), FILE *arquivoSaida);
 
 tNo *retornaNo(tLista *l, int i);
 
+informacao getPrimeiroItem(tLista *l);
+ 
 informacao removeUltimoItem(tLista *l);
 
 void concatenaListas(tLista *l1, tLista *l2);
 
 tVector *listaParaVector(tLista *l);
+
+void ordenaLista(tLista *list, int (*compare)(const void *, const void *));
 
 void destroiLista(tLista *l);
 

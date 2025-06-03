@@ -5,7 +5,7 @@ typedef void* informacao;
 typedef struct tVector tVector;
 #include <stdio.h>
 
-tVector *constroiVector();
+tVector *constroiVector(int qtdElementos);
 
 void insereAtrasVector(tVector *v, informacao val);
 

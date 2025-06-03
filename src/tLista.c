@@ -50,14 +50,14 @@ void insereAtrasLista(tLista *l, informacao dado) {
   l->tamanho++;
 }
 
-void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao)) {
+void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao, FILE*), FILE *arquivoSaida) {
   tNo *no = l->primeiro;
 
   while (no != NULL) {
-    funcaoImpressao(no->value);
+    funcaoImpressao(no->value, arquivoSaida);
 
     if (no->proximo != NULL) {
-      printf(", ");
+      fprintf(arquivoSaida, ", ");
     }
     no = no->proximo;
   }
@@ -75,6 +75,14 @@ tNo *retornaNo(tLista *l, int i) {
   }
 
   return no;
+}
+
+informacao getPrimeiroItem(tLista *l) {
+  if (l->primeiro) {
+    return l->primeiro;
+  }
+
+  return NULL;
 }
 
 informacao removeUltimoItem(tLista *l) {
@@ -124,7 +132,7 @@ tVector *listaParaVector(tLista *l) {
     return NULL;
   }
 
-  tVector *v = constroiVector();
+  tVector *v = constroiVector(l->tamanho);
   tNo *atual = l->primeiro;
 
   for (int i = 0; i < l->tamanho; i++) {
@@ -133,6 +141,30 @@ tVector *listaParaVector(tLista *l) {
   }
 
   return v;
+}
+
+void ordenaLista(tLista *list, int (*compare)(const void *, const void *)) {
+  if (list->primeiro == NULL || list->primeiro->proximo == NULL) {
+    return;
+  }
+  
+  tNo *i, *j, *min;
+
+  for (i = list->primeiro; i != NULL; i = i->proximo) {
+    min = i;
+
+    for (j = i->proximo; j != NULL; j = j->proximo) {
+      if (*(int *)j->value < *(int *)min->value) {
+        min = j;
+      }
+    }
+
+    if (min != i) {
+      informacao temp = i->value;
+      i->value = min->value;
+      min->value = temp;
+    }
+  }
 }
 
 void destroiLista(tLista *l) {
@@ -149,7 +181,7 @@ void destroiLista(tLista *l) {
 
 /*tIterador *tLista_front_iterator(tLista *l) {
   tIterador *iterator = (tIterador *)malloc(sizeof(tIterador));
-  iterator->current = l->head;
+  iterator->current = l->primeiro;
   return iterator;
 }
 
@@ -177,10 +209,10 @@ informacao *tLista_iterator_previous(tIterador *it) {
   return NULL;
 }
 
-informacao *tLista_iterator_next(tIterador *it) {
+informacao *tLista_iterator_proximo(tIterador *it) {
   if (!tLista_iterator_is_over(it)) {
     informacao *data = &(it->current->value);
-    it->current = it->current->next;
+    it->current = it->current->proximo;
     return data;
   }
 

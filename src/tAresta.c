@@ -9,7 +9,8 @@ typedef struct tAresta {
 
 tVector *criarArestas(tVector *pontos, int qtdCoord) {
   int qtdPontos = tamanhoVector(pontos);
-  tVector *arestas = constroiVector();
+  int qtdArestas = qtdPontos * (qtdPontos - 1) / 2;
+  tVector *arestas = constroiVector(qtdArestas);
 
   for (int i = 0; i < qtdPontos; i++) {
     for (int j = i + 1; j < qtdPontos; j++) {
@@ -30,7 +31,7 @@ void destroiArestas(tVector *arestas) {
 }
 
 tAresta *criarAresta(int idxPonto1, int idxPonto2, double peso) {
-  tAresta *a = (tAresta *)calloc(1, sizeof(tAresta));
+  tAresta *a = (tAresta *)malloc(sizeof(tAresta));
   a->idxPonto1 = idxPonto1;
   a->idxPonto2 = idxPonto2;
   a->peso = peso;
@@ -42,7 +43,6 @@ int comparaAresta(const void *arestaA, const void *arestaB) {
   const tAresta *b = *(const tAresta**)arestaB;
   double pesoA = a->peso;
   double pesoB = b->peso;
-
   return pesoA - pesoB;
 }
 
