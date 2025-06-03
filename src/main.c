@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
     char *token = strtok(linha, ",");
     insereAtrasVector(pontos, criarPonto(token, &qtdCoord));
   }
-  ordenaVector(pontos, comparaPontos);
+  ordenaVector(pontos, comparaPontos); //ordena apos ler
 
   fclose(arquivo);
   free(linha);

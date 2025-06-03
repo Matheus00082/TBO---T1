@@ -64,23 +64,49 @@ tVector *inicializaGrupos(tVector *pontos) {
   return grupos;
 }
 
+int comparaPrimeiroPontoDoGrupo(const void *grupoA_void, const void *grupoB_void) {
+    tVector *grupoA_vetor = *(tVector **)grupoA_void;
+    tVector *grupoB_vetor = *(tVector **)grupoB_void;
+
+    tPonto *pontoA_primeiro = (tPonto *)getElementoVector(grupoA_vetor, 0);
+    tPonto *pontoB_primeiro = (tPonto *)getElementoVector(grupoB_vetor, 0);
+
+    return comparaPontos(&pontoA_primeiro, &pontoB_primeiro);
+}
+
 void imprimeGrupos(tVector *grupos, const char *nomeArquivoSaida) {
-  int qtdPontos = tamanhoVector(grupos);
+  int qtdGrupos = tamanhoVector(grupos); //qtd grupos nn?
 
-  FILE *arquivoSaida = fopen(nomeArquivoSaida, "w");
 
-  for (int i = 0; i < qtdPontos; i++) {
-    tLista *l = getElementoVector(grupos, i);
+  tVector **gruposParaImprimir = (tVector **)calloc(qtdGrupos, sizeof(tVector *));
+  int grupoIdx = 0;
+
+  for (int i = 0; i < qtdGrupos; i++) {
+    tLista *l = (tLista*) getElementoVector(grupos, i);
 
     if (tamanhoLista(l) > 0) {
       tVector *v = listaParaVector(l);
       ordenaVector(v, comparaPontos);
-      imprimeVector(v, imprimeNomePonto, arquivoSaida);
-      destroiVector(v);
+      gruposParaImprimir[grupoIdx++] = v;
     }
   }
 
+  if (grupoIdx > 1) { 
+        qsort(gruposParaImprimir, grupoIdx, sizeof(tVector *), comparaPrimeiroPontoDoGrupo);
+  }
+
+  FILE *arquivoSaida = fopen(nomeArquivoSaida, "w");
+
+  for(int i = 0; i < grupoIdx; i++) {
+    imprimeVector(gruposParaImprimir[i], imprimeNomePonto, arquivoSaida);
+  }
+
   fclose(arquivoSaida);
+
+    for(int i = 0; i < grupoIdx; i++) {
+      destroiVector(gruposParaImprimir[i]);
+    }
+    free(gruposParaImprimir);
 }
 
 void destruirGrupos(tVector *grupos) {
