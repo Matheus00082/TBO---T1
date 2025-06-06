@@ -8,7 +8,6 @@ typedef struct tPonto {
 } tPonto;
 
 tPonto *ponto(char *nome, double *coordenadas, int qtdCoord) {
-
   tPonto *p = (tPonto *)calloc(1, sizeof(tPonto));
   p->nome = (char *)calloc(strlen(nome) + 1, sizeof(char));
   strcpy(p->nome, nome);
@@ -43,7 +42,7 @@ void destroiPontos(tVector *pontos) {
   for (int i = 0; i < qtdPontos; i++) {
     destroiPonto(removeAtrasVector(pontos));
   }
-  
+
   destroiVector(pontos);
 }
 

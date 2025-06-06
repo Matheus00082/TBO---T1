@@ -9,7 +9,7 @@ typedef struct tAresta {
 
 tVector *criarArestas(tVector *pontos, int qtdCoord) {
   int qtdPontos = tamanhoVector(pontos);
-  int qtdArestas = qtdPontos * (qtdPontos - 1) / 2;
+  int qtdArestas = qtdPontos * (qtdPontos - 1) / 2; // Fórmula para calcular o número de arestas em um grafo completo
   tVector *arestas = constroiVector(qtdArestas);
 
   for (int i = 0; i < qtdPontos; i++) {

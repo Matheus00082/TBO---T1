@@ -16,9 +16,7 @@ tLista *constroiLista() {
   return l;
 }
 
-int tamanhoLista(tLista *l) {
-  return l->tamanho;
-}
+int tamanhoLista(tLista *l) { return l->tamanho; }
 
 void insereFrenteLista(tLista *l, informacao dado) {
   tNo *novoNo = constroiNo(dado, NULL, l->primeiro);
@@ -137,4 +135,3 @@ void destroiLista(tLista *l) {
     free(l);
   }
 }
-

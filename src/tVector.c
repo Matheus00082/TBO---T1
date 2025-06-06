@@ -35,9 +35,7 @@ informacao getElementoVector(tVector *v, int i) {
   exit(printf("Erro ao acessar a posicao %d no vetor\n", i));
 }
 
-int tamanhoVector(tVector *v) {
-  return v->tamanho;
-}
+int tamanhoVector(tVector *v) { return v->tamanho; }
 
 informacao removeAtrasVector(tVector *v) {
   informacao element_back = removeElementoVector(v, v->tamanho - 1);
