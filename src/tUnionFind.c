@@ -1,5 +1,6 @@
-#include "unionFind.h"
+#include "tUnionFind.h"
 #include "tPonto.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct tUnionFind {
@@ -52,16 +53,12 @@ void uniao(tUnionFind *uf, int idxPonto1, int idxPonto2, tVector *grupos) {
 }
 
 int encontra(tUnionFind *uf, int idxPonto) {
-  if (idxPonto != uf->vetorMapa[idxPonto]) {
-    uf->vetorMapa[idxPonto] = encontra(uf, uf->vetorMapa[idxPonto]); 
+  while (idxPonto != uf->vetorMapa[idxPonto]) {
+    idxPonto = uf->vetorMapa[idxPonto];
   }
-  return uf->vetorMapa[idxPonto];
+  return idxPonto;
 }
 
 int verificaSePontosConectados(tUnionFind *uf, int idxPonto1, int idxPonto2) {
   return encontra(uf, idxPonto1) == encontra(uf, idxPonto2);
-}
-
-int getVetorMapa(tUnionFind *uf, int i) {
-  return uf->vetorMapa[i];
 }

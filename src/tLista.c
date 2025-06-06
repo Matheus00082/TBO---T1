@@ -20,10 +20,6 @@ int tamanhoLista(tLista *l) {
   return l->tamanho;
 }
 
-void decListaTamanho(tLista *l) {
-  l->tamanho--;
-}
-
 void insereFrenteLista(tLista *l, informacao dado) {
   tNo *novoNo = constroiNo(dado, NULL, l->primeiro);
 
@@ -48,19 +44,6 @@ void insereAtrasLista(tLista *l, informacao dado) {
   }
 
   l->tamanho++;
-}
-
-void imprimeLista(tLista *l, void (*funcaoImpressao)(informacao, FILE*), FILE *arquivoSaida) {
-  tNo *no = l->primeiro;
-
-  while (no != NULL) {
-    funcaoImpressao(no->value, arquivoSaida);
-
-    if (no->proximo != NULL) {
-      fprintf(arquivoSaida, ", ");
-    }
-    no = no->proximo;
-  }
 }
 
 tNo *retornaNo(tLista *l, int i) {
@@ -143,30 +126,6 @@ tVector *listaParaVector(tLista *l) {
   return v;
 }
 
-void ordenaLista(tLista *list, int (*compare)(const void *, const void *)) {
-  if (list->primeiro == NULL || list->primeiro->proximo == NULL) {
-    return;
-  }
-  
-  tNo *i, *j, *min;
-
-  for (i = list->primeiro; i != NULL; i = i->proximo) {
-    min = i;
-
-    for (j = i->proximo; j != NULL; j = j->proximo) {
-      if (*(int *)j->value < *(int *)min->value) {
-        min = j;
-      }
-    }
-
-    if (min != i) {
-      informacao temp = i->value;
-      i->value = min->value;
-      min->value = temp;
-    }
-  }
-}
-
 void destroiLista(tLista *l) {
   if (l) {
     while (l->primeiro != NULL) {
@@ -179,48 +138,3 @@ void destroiLista(tLista *l) {
   }
 }
 
-/*tIterador *tLista_front_iterator(tLista *l) {
-  tIterador *iterator = (tIterador *)malloc(sizeof(tIterador));
-  iterator->current = l->primeiro;
-  return iterator;
-}
-
-tIterador *tLista_back_iterator(tLista *l) {
-  tIterador *iterator = (tIterador *)malloc(sizeof(tIterador));
-  iterator->current = l->last;
-  return iterator;
-}
-
-bool tLista_iterator_is_over(tIterador *it) {
-  if (it->current == NULL) {
-    return 1;
-  }
-
-  return 0;
-}
-
-informacao *tLista_iterator_previous(tIterador *it) {
-  if (!tLista_iterator_is_over(it)) {
-    informacao *data = &(it->current->value);
-    it->current = it->current->prev;
-    return data;
-  }
-
-  return NULL;
-}
-
-informacao *tLista_iterator_proximo(tIterador *it) {
-  if (!tLista_iterator_is_over(it)) {
-    informacao *data = &(it->current->value);
-    it->current = it->current->proximo;
-    return data;
-  }
-
-  return NULL;
-}
-
-void tLista_iterator_destroy(tIterador *it) {
-  if (it) {
-    free(it);
-  }
-}*/

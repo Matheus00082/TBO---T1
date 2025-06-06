@@ -26,7 +26,6 @@ int comparaPontos(const void *pontoA, const void *pontoB) {
   const tPonto *b = *(const tPonto**)pontoB;
   char *nomePontoA = a->nome;
   char *nomePontoB = b->nome;
-
   return strcmp(nomePontoA, nomePontoB);
 }
 
@@ -44,6 +43,7 @@ void destroiPontos(tVector *pontos) {
   for (int i = 0; i < qtdPontos; i++) {
     destroiPonto(removeAtrasVector(pontos));
   }
+  
   destroiVector(pontos);
 }
 
@@ -60,7 +60,7 @@ double distanciaEuclidiana(tPonto *p1, tPonto *p2, int qtdCoord) {
     somatorio += (coordenada1 - coordenada2) * (coordenada1 - coordenada2);
   }
 
-  return somatorio;
+  return somatorio; // Não precisa da raiz quadrada, pois a distância é usada apenas para comparação.
 }
 
 void imprimeNomePonto(void *p, FILE *arquivoSaida) {
